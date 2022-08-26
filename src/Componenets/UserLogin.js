@@ -14,9 +14,14 @@ const UserLogin = () => {
     }
   return (
 
-    <div className='grow flex justify-center item-center flex-col gap-5 m-5 text-center'>
+    <div className='grow flex justify-center 
+    items-center flex-col m-5  '>
         <h3>Regular User Login</h3>
-        <button onClick={startUserChat}>Start Chat</button>
+        <div>
+
+   
+        <button className='w-40 p-3 m-5' onClick={startUserChat}>Start Chat</button>
+        </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react'
 import mainContext from '../context/MainContext'
-
+import ScrollToBottom from "react-scroll-to-bottom"
 
 const UserChat = () => {
 
@@ -15,11 +15,12 @@ const UserChat = () => {
 
   }
   return (
-    <div className='user-chat flex flex-col justify-between '>
-   {users.map((x,i)=>
-   <div key={i}>
+    <div className='chat window h-96 m-5  '>
 
-   
+<ScrollToBottom className='message-container'>
+   {users.map((x,i)=>
+   <div className='chat-body' key={i}>
+  
      {x.messages.map((x,i)=>
                <div className='message-content' key={i}>
                
@@ -30,9 +31,11 @@ const UserChat = () => {
                  )}
                  </div>)}
      
-
+                 </ScrollToBottom>
         <div className='send-message'>
-        <input ref={messageRef} className='w-2/4' type="text" placeholder='Hello...' />
+        <input ref={messageRef}
+         onKeyPress={(e)=> {e.key === "Enter" && sendMessageToAdmin()}}
+         className='w-2/4' type="text" placeholder='Hello...' />
         <button onClick={sendMessageToAdmin} className='w-1/4'>Send</button>
         </div>
      
