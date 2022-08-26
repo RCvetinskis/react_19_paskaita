@@ -32,7 +32,6 @@ body{
 .chat-window .chat-body {
   height: calc(450px - (45px + 70px));
   border: 1px solid #263238;
-  background: #fff;
 
   position: relative;
 }
@@ -56,6 +55,7 @@ body{
   height: auto;
   padding: 10px;
   display: flex;
+
 }
 
 .message-content{
@@ -98,6 +98,7 @@ body{
   outline: none;
   font-size: 25px;
   color: lightgray;
+  background-color: #fff;
 
 }
 
@@ -126,4 +127,21 @@ body{
 }
 .send-message input{
   height: 50px;
+}
+
+.progress-container{
+  width: 400px;
+  height: 30px;
+  border: 1px solid black;
+  position: relative;
+}
+.progress-bar{
+  height: 100%;
+ background: red;
+
+}
+.progress-bar span{
+  position: absolute;
+  left: 46%;
+
 }

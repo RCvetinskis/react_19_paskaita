@@ -1,24 +1,29 @@
-import React, {useContext, useRef} from 'react'
+import React, {useContext, useRef, useState, useEffect} from 'react'
 import ScrollToBottom from "react-scroll-to-bottom"
 import mainContext from '../context/MainContext'
 
-const Chat = ({user}) => {
+const Chat = ({chat}) => {
 
   const { socket} = useContext(mainContext)
 
+  console.log(chat);
+
+
+  
+
   const messageRef = useRef()
 
- 
-  
-    function sendMessage(sender){
-
-      socket.emit("message_from_admin",messageRef.current.value, sender )
-      messageRef.current.value=""
+    function sendMessage(){
+      socket.emit("message", {
+        message: messageRef.current.value,
+        id: chat.id
+      })
+      messageRef.current.value= ""
     }
   return (
-    <div className='chat-window'>
+    <div className='chat-window' style={{backgroundColor:chat.color}}>
     <div className="chat-header">
-          <p>User: {user.id}</p>
+          <p>User: {chat.username}</p>
 
       </div> 
      
@@ -27,19 +32,19 @@ const Chat = ({user}) => {
        <ScrollToBottom className='message-container'>
       
                <div>
-               {user.messages.map((x,i)=>
-               <div className='message-content' key={i}>
+               {chat.messages.map((x,i)=>
+               <div className='message-content flex items-center m-4' style={x.from === "admin" ?   {justifyContent: "flex-start"} :   {justifyContent: "flex-end"} } key={i}>
                
-                     <p>{x.message}</p>
-                     <p>sent by: {x.sender}</p>
-                 
+                   <p>{x.value}</p>
+                     <div className='ml-3'>
+                     <b>{x.from}</b>
+                     <b> {x.time}</b>  
+                     </div>
+                          
                </div>
                  )}
 
                 </div>
-          
-    
-               
  
        </ScrollToBottom>
 
@@ -49,8 +54,8 @@ const Chat = ({user}) => {
        type="text"
         placeholder='Hello...' 
         ref={messageRef}
-       onKeyPress={(e)=> {e.key === "Enter" && sendMessage(user.id)}} />
-       <button onClick={()=> sendMessage(user.id)}>&#9658;</button>
+       onKeyPress={(e)=> {e.key === "Enter" && sendMessage()}} />
+       <button onClick={sendMessage}>&#9658;</button>
        </div>   
    </div>
   )

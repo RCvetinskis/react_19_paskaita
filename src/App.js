@@ -10,31 +10,41 @@ const socket = io.connect("http://localhost:4000")
 function App() {
 
   const [adminUser, setAdminUser]= useState(null)
-  const [users, setUsers]= useState([])
+  const [chats, setChats]= useState([])
+  const [singleChat, setSingleChat]= useState(null)
+  const [spaceLeft, setSpaceLeft]= useState(5)
+  const [progressBar, setProgressBar]= useState(0)
 
 
 
-// atvaizduoti VISUS USERIUS, KIEK USERIU TIEK CHATU, ATVAIZDUOTU ISSIUSTAS ZINUTES SAVO
- const values ={
+useEffect(() => {
+  socket.on("chats", (data)=>{
+     setChats(data)
+     setProgressBar(`${data.length * 20}%`)
+    })
+  socket.on("chat", (data)=>{
+   setSingleChat(data)})
+  socket.on("space_left", (data)=>{
+    setSpaceLeft(data)
+    })
+
+ }, [])
+
+
+const values ={
   socket,
   adminUser,
   setAdminUser,
-  users
+  chats,
+  singleChat,
+  spaceLeft,
+  progressBar
 
  }
  
 
 
- useEffect(() => {
-  socket.on("display_users_objects", (data)=>{
-    setUsers(data)
-  })
 
-  socket.on("display_admin_messages", (data)=>{
-    setUsers(data)
-  })
-
- }, [socket])
  
 
 
